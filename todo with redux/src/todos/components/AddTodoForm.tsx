@@ -1,19 +1,18 @@
 'use client';
 import { useContext, useState } from 'react';
-import { TodoContext } from '@/todos/context/TodoContext';
+import { useDispatch} from 'react-redux';
+import { TodoContext } from '../context/TodoContext';
+import { addTodo } from '@/store/todosSlice';
+
 
 export default function AddTodoForm() {
-  const context = useContext(TodoContext);
-  if (!context) {
-    throw new Error('AddTodoForm must be used within a TodoProvider');
-  }
-  const { addTodo } = context;
+  const dispatch = useDispatch();
   const [title, setTitle] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (title.trim()) {
-      addTodo(title);
+      dispatch(addTodo(title));
       setTitle('');
     }
   };
